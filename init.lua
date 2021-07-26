@@ -118,14 +118,17 @@ local function interact(tool, user, pointed_thing, reverse)
 	return tool
 end
 
+local breaks_sound = nil
+if minetest.global_exists("default") or
+   minetest.global_exists("mcl_sounds") then
+	breaks_sound = "default_tool_breaks"
+end
 minetest.register_tool("shifter_tool:shifter", {
 	description = S("Shifter"),
 	inventory_image = "shifter_tool_shifter.png",
+	_mcl_toollike_wield = true,
 	node_dig_prediction = "",
-	sounds = {
-		breaks = minetest.global_exists("default") and
-			"default_tool_breaks" or nil,
-	},
+	sounds = {breaks = breaks_sound},
 	on_place = function(tool, user, pointed_thing)
 		return interact(tool, user, pointed_thing, true)
 	end,
