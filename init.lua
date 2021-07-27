@@ -120,7 +120,7 @@ minetest.register_tool("shifter_tool:shifter", {
 	after_use = function() return nil end, -- Do nothing.
 })
 
-if minetest.registered_nodes["mesecons_pistons:piston_sticky_off"] then
+if minetest.registered_items["mesecons_pistons:piston_sticky_off"] then
 	minetest.register_craft({
 		output = "shifter_tool:shifter",
 		recipe = {
