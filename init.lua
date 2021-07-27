@@ -83,52 +83,34 @@ local function shift_node(pos, move_dir, user)
 	return shifted
 end
 
--- Adds wear to the tool, maybe breaking it and playing a sound.
-local function wear_out_tool(tool, use_pos, user)
-	local name = user and user:get_player_name() or ""
-	if not minetest.is_creative_enabled(name) then
-		local sounds = tool:get_definition().sounds
-		tool:add_wear(WEAR_PER_USE)
-		if tool:get_count() == 0 and sounds.breaks then
-			minetest.sound_play(sounds.breaks, {
-				pos = use_pos,
-				gain = 0.5,
-			}, true)
-		end
-	end
-end
-
 -- Do the interaction. If reverse is true, the action pulling (otherwise it's
 -- pushing.)
 local function interact(tool, user, pointed_thing, reverse)
 	if pointed_thing.type == "node" then
+		local name = user and user:get_player_name() or ""
 		local use_pos = pointed_thing.under
 		local move_dir = vector.subtract(use_pos, pointed_thing.above)
 		if reverse then move_dir = vector.multiply(move_dir, -1) end
 		if shift_node(use_pos, move_dir, user) then
-			wear_out_tool(tool, use_pos, user)
 			local sound = reverse and "shifter_tool_pull" or
 				"shifter_tool_push"
 			minetest.sound_play(sound, {
 				pos = use_pos,
 				gain = 0.2,
 			}, true)
+			if not minetest.is_creative_enabled(name) then
+				tool:add_wear(WEAR_PER_USE)
+			end
 		end
 	end
 	return tool
 end
 
-local breaks_sound = nil
-if minetest.global_exists("default") or
-   minetest.global_exists("mcl_sounds") then
-	breaks_sound = "default_tool_breaks"
-end
 minetest.register_tool("shifter_tool:shifter", {
 	description = S("Shifter"),
 	inventory_image = "shifter_tool_shifter.png",
 	_mcl_toollike_wield = true,
 	node_dig_prediction = "",
-	sounds = {breaks = breaks_sound},
 	on_place = function(tool, user, pointed_thing)
 		return interact(tool, user, pointed_thing, true)
 	end,
