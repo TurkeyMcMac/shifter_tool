@@ -138,20 +138,13 @@ minetest.register_tool("shifter_tool:shifter", {
 	after_use = function() return nil end, -- Do nothing.
 })
 
-function register_tool_craft(head_node, handle_craftitem)
-	if minetest.registered_nodes[head_node] and
-	   minetest.registered_craftitems[handle_craftitem] then
-		minetest.register_craft({
-			output = "shifter_tool:shifter",
-			recipe = {
-				{head_node, ""              },
-				{head_node, handle_craftitem},
-				{""       , handle_craftitem},
-			},
-		})
-	end
+if minetest.registered_nodes["mesecons_pistons:piston_sticky_off"] then
+	minetest.register_craft({
+		output = "shifter_tool:shifter",
+		recipe = {
+			{"mesecons_pistons:piston_sticky_off", ""           },
+			{"mesecons_pistons:piston_sticky_off", "group:stick"},
+			{""                                  , "group:stick"},
+		},
+	})
 end
--- Minetest Game:
-register_tool_craft("mesecons_pistons:piston_sticky_off", "default:stick")
--- MineClone 2:
-register_tool_craft("mesecons_pistons:piston_sticky_off", "mcl_core:stick")
