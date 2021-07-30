@@ -2,6 +2,8 @@
 
 ![The shifter](screenshot.png)
 
+[![ContentDB](https://content.minetest.net/packages/jwmhjwmh/shifter_tool/shields/title/)](https://content.minetest.net/packages/jwmhjwmh/shifter_tool/)
+
 This is a mod for [Minetest][1]. It implements a tool for shifting nodes as with
 the pistons from [Mesecons][2]. It actually uses the API of `mesecons_mvps`,
 meaning that it is quite compatible with other mods (the API is widely used.)
