@@ -83,8 +83,8 @@ local function shift_node(pos, move_dir, user)
 	return shifted
 end
 
--- Do the interaction. If reverse is true, the action pulling (otherwise it's
--- pushing.)
+-- Do the interaction. If reverse is true, the action is pulling
+-- (otherwise it's pushing.)
 local function interact(tool, user, pointed_thing, reverse)
 	if pointed_thing.type == "node" then
 		local name = user and user:get_player_name() or ""
