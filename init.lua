@@ -55,7 +55,7 @@ local function shift_node(pos, move_dir, user)
 		return false
 	end
 	-- The name changed to conform to the conventions of mvps_push:
-	local shifter_name = is_player and name or "$unknown"
+	local shifter_name = name ~= "" and name or "$unknown"
 	-- MineClone requires this position that is where the piston would be:
 	local piston_pos = nil
 	-- Detect Mineclone using the presence of mcl_get_neighbors:
